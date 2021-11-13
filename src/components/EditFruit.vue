@@ -2,26 +2,24 @@
   <div>
     <v-card :loading="loading">
       <template slot="progress">
-        <v-progress-linear
-          :color="fruit.color"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
+        <v-progress-linear height="10" indeterminate></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="fruit.image"></v-img>
+      <v-img height="250">
+        <v-btn>Load image</v-btn>
+      </v-img>
 
       <v-card-actions>
-        <v-card-title>{{
-          fruit.name.charAt(0).toUpperCase() + fruit.name.slice(1)
-        }}</v-card-title>
+        <!-- <v-card-title>{{
+          fruit?.name.charAt(0).toUpperCase() + fruit?.name.slice(1)
+        }}</v-card-title> -->
         <v-spacer></v-spacer>
         <div>$ 550</div>
       </v-card-actions>
 
       <v-card-actions>
-        <v-btn color="orange lighten-2" text> Eat </v-btn>
-        <v-btn color="orange lighten-2" text> Modify </v-btn>
+        <v-btn text> Save </v-btn>
+        <v-btn text> Cancel </v-btn>
         <v-spacer></v-spacer>
 
         <v-btn style="right: 40px" icon @click="show = !show">
@@ -34,7 +32,7 @@
         <div v-show="show">
           <v-divider></v-divider>
           <v-card-text>
-            {{ fruit.description }}
+            <!-- {{ fruit?.description }} -->
           </v-card-text>
         </div>
       </v-expand-transition>
@@ -44,7 +42,7 @@
 
 <script>
 export default {
-  name: "Fruit",
+  name: "EditFruit",
   props: {
     fruit: Object,
   },
