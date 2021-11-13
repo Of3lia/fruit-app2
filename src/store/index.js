@@ -20,6 +20,7 @@ export default new Vuex.Store({
     },
     mutations: {
         SET_FRUITS(state, fruits) {
+            state.fruits = [];
             getFruitsFromChaos(fruits.data, state);
         }
     },
