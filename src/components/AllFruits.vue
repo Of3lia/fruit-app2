@@ -10,7 +10,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "HelloWorld",
+  name: "AllFruits",
   mounted() {
     this.$store.dispatch("loadFruits");
   },

@@ -26,6 +26,8 @@ export default new Vuex.Store({
     modules: {}
 })
 
+// Utils TODO: move to utils file
+
 var getFruitsFromChaos = async(data, state) => {
     let fruits = traverse(data);
     fruits.forEach(fruit => {
