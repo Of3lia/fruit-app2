@@ -4,13 +4,19 @@
       <div v-if="fruit.id">{{ fruit }}</div>
       <br />
     </span>
+
+    <Fruit />
   </div>
 </template>
 
 <script>
+import Fruit from "@/components/Fruit.vue";
 import { mapState } from "vuex";
 export default {
   name: "AllFruits",
+  components: {
+    Fruit,
+  },
   mounted() {
     this.$store.dispatch("loadFruits");
   },
