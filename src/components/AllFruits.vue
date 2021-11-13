@@ -8,12 +8,12 @@
           </v-col>
         </template>
 
-        <v-col xs="12" sm="6" md="4" lg="4" xl="3">
+        <v-col xs="12" sm="6" md="6" lg="4" xl="3">
           <AddFruitButton />
         </v-col>
 
-        <v-col xs="12" sm="6" md="4" lg="4" xl="3">
-          <EditFruit :fruit="fruits[0]" />
+        <v-col xs="12" sm="6" md="6" lg="4" xl="3">
+          <EditFruit />
         </v-col>
       </v-row>
     </v-container>

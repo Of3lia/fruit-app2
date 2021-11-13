@@ -1,42 +1,29 @@
 <template>
   <div>
-    <v-card :loading="loading">
-      <template slot="progress">
-        <v-progress-linear height="10" indeterminate></v-progress-linear>
-      </template>
+    <v-form v-model="fruit">
+      <v-container>
+        <v-row>
+          <v-card style="width: 100%">
+            <v-col cols="12" md="12">
+              <v-text-field
+                v-model="firstname"
+                :counter="10"
+                label="Fruit name"
+                required
+              ></v-text-field>
+            </v-col>
 
-      <v-img height="250">
-        <v-btn>Load image</v-btn>
-      </v-img>
-
-      <v-card-actions>
-        <!-- <v-card-title>{{
-          fruit?.name.charAt(0).toUpperCase() + fruit?.name.slice(1)
-        }}</v-card-title> -->
-        <v-spacer></v-spacer>
-        <div>$ 550</div>
-      </v-card-actions>
-
-      <v-card-actions>
-        <v-btn text> Save </v-btn>
-        <v-btn text> Cancel </v-btn>
-        <v-spacer></v-spacer>
-
-        <v-btn style="right: 40px" icon @click="show = !show">
-          Description
-          <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
-        </v-btn>
-      </v-card-actions>
-
-      <v-expand-transition>
-        <div v-show="show">
-          <v-divider></v-divider>
-          <v-card-text>
-            <!-- {{ fruit?.description }} -->
-          </v-card-text>
-        </div>
-      </v-expand-transition>
-    </v-card>
+            <v-col cols="12" md="12">
+              <v-textarea
+                name="input-7-1"
+                label="Description"
+                value=""
+              ></v-textarea>
+            </v-col>
+          </v-card>
+        </v-row>
+      </v-container>
+    </v-form>
   </div>
 </template>
 
