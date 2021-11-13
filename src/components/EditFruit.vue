@@ -1,29 +1,42 @@
 <template>
   <div>
-    <v-form v-model="fruit">
-      <v-container>
-        <v-row>
-          <v-card style="width: 100%">
-            <v-col cols="12" md="12">
+    <v-card>
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col cols="8">
               <v-text-field
-                v-model="firstname"
-                :counter="10"
+                v-model="fruit.name"
                 label="Fruit name"
                 required
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="12">
+            <v-col cols="4">
+              <v-text-field
+                label="Price"
+                placeholder="0.00"
+                append-icon="mdi-currency-eur"
+                type="number"
+                required
+              ></v-text-field>
+            </v-col>
+
+            <v-col v-if="false" cols="8">
+              <v-color-picker></v-color-picker>
+            </v-col>
+
+            <v-col cols="12">
               <v-textarea
-                name="input-7-1"
                 label="Description"
-                value=""
+                v-model="fruit.description"
+                required
               ></v-textarea>
             </v-col>
-          </v-card>
-        </v-row>
-      </v-container>
-    </v-form>
+          </v-row>
+        </v-container>
+      </v-form>
+    </v-card>
   </div>
 </template>
 
@@ -31,17 +44,19 @@
 export default {
   name: "EditFruit",
   props: {
-    fruit: Object,
+    fruitToEdit: Object,
   },
-  data: () => ({
-    loading: false,
-    show: false,
-  }),
-  methods: {
-    reserve() {
-      this.loading = true;
-      setTimeout(() => (this.loading = false), 2000);
-    },
+  data() {
+    return {
+      isEdit: false,
+      fruit: [],
+    };
+  },
+  mounted() {
+    if (this.fruitToEdit) {
+      this.isEdit = true;
+      this.fruit = this.fruitToEdit;
+    }
   },
 };
 </script>

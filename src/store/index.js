@@ -30,6 +30,7 @@ export default new Vuex.Store({
 // Utils TODO: move to utils file
 
 var getFruitsFromChaos = async(data, state) => {
+
     let fruits = traverse(data);
     fruits.forEach(fruit => {
         state.fruits.push(fruit);
@@ -41,10 +42,13 @@ var getFruitsFromChaos = async(data, state) => {
 function traverse(jsonObj) {
     let fruits = [];
     if (jsonObj !== null && typeof jsonObj == "object") {
+
         Object.entries(jsonObj).forEach(([key, value]) => {
+
             let returnFruits = traverse(value);
             returnFruits.forEach(fruit => { fruits.push(fruit); });
-            if (key == 'isFruit' && value === true) { fruits.push(jsonObj); }
+
+            if (key == 'isFruit' && value === true && jsonObj.id) { fruits.push(jsonObj); }
         });
     }
     return fruits;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card :loading="loading">
+    <v-card v-if="!editFruit" :loading="loading">
       <template slot="progress">
         <v-progress-linear
           :color="fruit.color"
@@ -21,7 +21,9 @@
 
       <v-card-actions>
         <v-btn color="orange lighten-2" text> Eat </v-btn>
-        <v-btn color="orange lighten-2" text> Modify </v-btn>
+        <v-btn color="orange lighten-2" text @click="editFruit = true">
+          Modify
+        </v-btn>
         <v-spacer></v-spacer>
 
         <v-btn style="right: 40px" icon @click="show = !show">
@@ -39,18 +41,24 @@
         </div>
       </v-expand-transition>
     </v-card>
+    <EditFruit v-else :fruit-to-edit="fruit" />
   </div>
 </template>
 
 <script>
+import EditFruit from "./EditFruit.vue";
 export default {
   name: "Fruit",
   props: {
     fruit: Object,
   },
+  components: {
+    EditFruit,
+  },
   data: () => ({
     loading: false,
     show: false,
+    editFruit: false,
   }),
   methods: {
     reserve() {

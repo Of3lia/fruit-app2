@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card id="isAdd">
+    <v-card v-if="!createFruit" id="isAdd" @click="createFruit = true">
       <v-icon
         id="add-button"
         style="
@@ -14,12 +14,20 @@
         >mdi-plus-thick</v-icon
       >
     </v-card>
+    <EditFruit v-else />
   </div>
 </template>
 
 <script>
+import EditFruit from "./EditFruit.vue";
 export default {
   name: "AddFruitButton",
+  components: { EditFruit },
+  data() {
+    return {
+      createFruit: false,
+    };
+  },
 };
 </script>
 

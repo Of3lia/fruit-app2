@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <template v-for="(fruit, i) in fruits">
-          <v-col v-if="fruit.id" xs="12" sm="6" md="6" lg="4" xl="3" :key="i">
+          <v-col xs="12" sm="6" md="6" lg="4" xl="3" :key="i">
             <Fruit :fruit="fruit" />
           </v-col>
         </template>
@@ -12,7 +12,7 @@
           <AddFruitButton />
         </v-col>
 
-        <v-col xs="12" sm="6" md="6" lg="4" xl="3">
+        <v-col v-if="createFruit" xs="12" sm="6" md="6" lg="4" xl="3">
           <EditFruit />
         </v-col>
       </v-row>
@@ -36,5 +36,10 @@ export default {
     this.$store.dispatch("loadFruits");
   },
   computed: mapState(["fruits"]),
+  data() {
+    return {
+      createFruit: false,
+    };
+  },
 };
 </script>
