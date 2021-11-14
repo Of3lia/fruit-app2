@@ -22,7 +22,6 @@ export default new Vuex.Store({
         SET_FRUITS(state, fruits) {
             state.fruits = [];
             getFruitsFromChaos(fruits.data, state);
-            console.log(state.fruits[0].expires);
         }
     },
     modules: {}

@@ -9,7 +9,7 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="fruit.image"></v-img>
+      <v-img height="250" :src="fruit.image"> </v-img>
 
       <v-card-actions>
         <v-card-title>{{
@@ -18,7 +18,6 @@
         <v-spacer></v-spacer>
         <div>{{ fruit.price }} €</div>
       </v-card-actions>
-      <div>{{ fruit.expires }}</div>
 
       <v-card-actions>
         <v-btn color="orange lighten-2" text> Eat </v-btn>
@@ -39,6 +38,12 @@
           <v-card-text>
             {{ fruit.description }}
           </v-card-text>
+          <v-card-text>
+            Expiration date:
+            <span style="color: rgb(100, 200, 100)">
+              {{ moment(fruit.expires) }}
+            </span>
+          </v-card-text>
         </div>
       </v-expand-transition>
     </v-card>
@@ -48,6 +53,8 @@
 
 <script>
 import EditFruit from "./EditFruit.vue";
+import moment from "moment";
+
 export default {
   name: "Fruit",
   props: {
@@ -65,6 +72,9 @@ export default {
     reserve() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
+    },
+    moment(val) {
+      return moment(String(val)).format("MM/DD/YYYY hh:mm");
     },
   },
 };
