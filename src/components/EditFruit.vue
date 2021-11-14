@@ -29,11 +29,28 @@
             <v-col cols="12">
               <v-textarea
                 label="Description"
+                rows="1"
+                auto-grow
                 v-model="fruit.description"
                 required
               ></v-textarea>
             </v-col>
 
+            <!-- Image -->
+            <!-- <v-col cols="3">
+              <v-file-input prepend-icon="mdi-camera"></v-file-input>
+            </v-col> -->
+
+            <!-- Image URL -->
+            <v-col cols="12">
+              <v-text-field
+                v-model="fruit.image"
+                label="Image URL"
+                required
+              ></v-text-field>
+            </v-col>
+
+            <!-- Expires -->
             <v-col cols="12">
               <v-text-field
                 label="Expiration time"
@@ -48,7 +65,7 @@
               <v-text-field
                 v-model="fruit.taste"
                 label="Taste"
-                placeholder="0.00"
+                placeholder="Nice"
                 required
               ></v-text-field>
             </v-col>
@@ -63,7 +80,7 @@
               ></v-text-field>
             </v-col>
             <v-col cols="2">
-              <v-icon :style="{ color: fruit.color }" large
+              <v-icon :style="{ color: fruit.color }" x-large
                 >mdi-fruit-pineapple</v-icon
               >
             </v-col>
@@ -71,14 +88,8 @@
         </v-container>
       </v-form>
       <v-card-actions>
-        <v-btn color="orange lighten-2" text> Save </v-btn>
-        <v-btn
-          color="orange lighten-2"
-          text
-          @click="$emit('update:editFruit', false)"
-        >
-          Cancel
-        </v-btn>
+        <v-btn color="orange lighten-2" text @click="save()"> Save </v-btn>
+        <v-btn color="orange lighten-2" text @click="cancel()"> Cancel </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>
@@ -87,6 +98,7 @@
 
 <script>
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   name: "EditFruit",
@@ -98,13 +110,33 @@ export default {
     return {
       isEdit: false,
       fruit: [],
+      fruitBeforeEdit: {},
     };
   },
   mounted() {
     if (this.fruitToEdit) {
       this.isEdit = true;
       this.fruit = this.fruitToEdit;
+      this.fruitBeforeEdit = Object.assign({}, this.fruitToEdit);
     }
+  },
+  methods: {
+    save() {
+      if (this.isEdit) {
+        this.$store.dispatch("editFruit", this.fruit);
+      } else {
+        this.$store.dispatch("createFruit", this.fruit);
+      }
+    },
+    cancel() {
+      if (this.isEdit) {
+        Object.assign(
+          this.$store.state.fruits.find((x) => x.id === this.fruit.id),
+          this.fruitBeforeEdit
+        );
+      }
+      this.$emit("update:editFruit", false);
+    },
   },
   computed: {
     expires: {
@@ -116,11 +148,6 @@ export default {
       },
     },
   },
-  methods: {
-    // getExpirationDate(val) {
-    //   return "2018-06-12T19:30";
-    //   // return moment(String(val)).format("yyyy-MM-dd[T]hh:mm :ss.SSS[Z]");
-    // },
-  },
 };
 </script>
+

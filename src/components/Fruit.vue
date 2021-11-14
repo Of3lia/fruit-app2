@@ -43,8 +43,15 @@
         <v-spacer></v-spacer>
         <div>{{ fruit.price }} €</div>
       </v-card-actions>
+
       <v-card-actions v-if="!expired">
-        <v-btn color="orange lighten-2" text> Eat </v-btn>
+        <v-btn
+          color="orange lighten-2"
+          text
+          @click="$store.dispatch('deleteFruit', fruit.id)"
+        >
+          Eat
+        </v-btn>
         <v-btn color="orange lighten-2" text @click="editFruit = true">
           Modify
         </v-btn>
@@ -55,8 +62,15 @@
           <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
         </v-btn>
       </v-card-actions>
+
       <v-card-actions v-else>
-        <v-btn color="orange lighten-2" text style="color: red">Discard</v-btn>
+        <v-btn
+          color="orange lighten-2"
+          text
+          @click="$store.dispatch('deleteFruit', fruit.id)"
+          style="color: red"
+          >Discard</v-btn
+        >
         <v-btn color="orange lighten-2" text @click="editFruit = true">
           Modify
         </v-btn>
@@ -82,7 +96,11 @@
         </div>
       </v-expand-transition>
     </v-card>
-    <EditFruit v-else :edit-fruit.sync="editFruit" :fruit-to-edit="fruit" />
+    <EditFruit
+      v-else
+      :edit-fruit.sync="editFruit"
+      :fruit-to-edit.sync="fruitComp"
+    />
   </div>
 </template>
 
@@ -107,6 +125,16 @@ export default {
   }),
   mounted() {
     this.setExpirationDate();
+  },
+  computed: {
+    fruitComp: {
+      get() {
+        return this.fruit;
+      },
+      set(val) {
+        this.fruit = val;
+      },
+    },
   },
   methods: {
     reserve() {

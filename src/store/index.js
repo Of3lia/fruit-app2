@@ -16,12 +16,57 @@ export default new Vuex.Store({
                 .then(fruits => {
                     commit('SET_FRUITS', fruits)
                 })
+                .catch(e => { console.log(e) });
+        },
+        createFruit({ commit }, fruit) {
+            fruit.isFruit = true;
+            axios
+                .post('http://localhost:3000/fruit', {...fruit })
+                .then(r => {
+                    commit('ADD_FRUIT', r.data)
+                })
+                .catch(e => { console.log(e) });
+        },
+        editFruit({ commit }, fruit) {
+            axios
+                .put('http://localhost:3000/fruit/' + fruit.id, {...fruit })
+                .then(r => {
+                    commit('EDIT_DATA', r.data)
+                })
+                .catch(e => { console.log(e) });
+        },
+        deleteFruit({ commit }, id) {
+            axios
+                .delete('http://localhost:3000/fruit/' + id)
+                .then(r => {
+                    commit('REMOVE_FRUIT', id)
+                })
+                .catch(e => { console.log(e) });
         }
     },
     mutations: {
         SET_FRUITS(state, fruits) {
             state.fruits = [];
             getFruitsFromChaos(fruits.data, state);
+        },
+        ADD_FRUIT(state, newFruit) {
+            state.fruits.push(newFruit);
+        },
+        EDIT_DATA(state, fruit) {
+            // Object.assign(state.fruits.find(x => x.id === fruit.id), {...fruit });
+            state.fruits.find(x => x.id == fruit.id).name = fruit.name;
+            // oldFruit.name = fruit.name;
+            // oldFruit.price = fruit.price;
+            // oldFruit.description = fruit.description;
+            // oldFruit.color = fruit.color;
+            // oldFruit.expires = fruit.expires;
+            // oldFruit.image = fruit.image;
+            // oldFruit.taste = fruit.taste;
+            // console.log(oldFruit);
+        },
+        REMOVE_FRUIT(state, id) {
+            let currentFruit = state.fruits.find(x => x.id === id);
+            currentFruit.id = '';
         }
     },
     modules: {}
