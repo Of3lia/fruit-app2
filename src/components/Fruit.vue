@@ -9,7 +9,32 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="fruit.image"> </v-img>
+      <v-img height="250" :src="fruit.image">
+        <div
+          v-if="expired"
+          style="
+            padding: 0.2em;
+            border-radius: 0.2em;
+            background-color: rgb(100, 100, 100, 0.3);
+            font-size: x-large;
+            color: red;
+          "
+        >
+          Expired
+        </div>
+        <div
+          v-else
+          style="
+            padding: 0.2em;
+            border-radius: 0.2em;
+            background-color: rgb(150, 150, 150, 0.3);
+            font-size: x-large;
+          "
+          :style="{ color: fruit.color }"
+        >
+          {{ fruit.taste }}
+        </div>
+      </v-img>
 
       <v-card-actions>
         <v-card-title>{{
@@ -18,14 +43,24 @@
         <v-spacer></v-spacer>
         <div>{{ fruit.price }} €</div>
       </v-card-actions>
-
-      <v-card-actions>
+      <v-card-actions v-if="!expired">
         <v-btn color="orange lighten-2" text> Eat </v-btn>
         <v-btn color="orange lighten-2" text @click="editFruit = true">
           Modify
         </v-btn>
         <v-spacer></v-spacer>
 
+        <v-btn style="right: 40px" icon @click="show = !show">
+          Description
+          <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-card-actions v-else>
+        <v-btn color="orange lighten-2" text style="color: red">Discard</v-btn>
+        <v-btn color="orange lighten-2" text @click="editFruit = true">
+          Modify
+        </v-btn>
+        <v-spacer></v-spacer>
         <v-btn style="right: 40px" icon @click="show = !show">
           Description
           <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
@@ -40,8 +75,8 @@
           </v-card-text>
           <v-card-text>
             Expiration date:
-            <span style="color: rgb(100, 200, 100)">
-              {{ moment(fruit.expires) }}
+            <span>
+              {{ expires }}
             </span>
           </v-card-text>
         </div>
@@ -67,14 +102,26 @@ export default {
     loading: false,
     show: false,
     editFruit: false,
+    expired: false,
+    expires: "",
   }),
+  mounted() {
+    this.setExpirationDate();
+  },
   methods: {
     reserve() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
     },
-    moment(val) {
-      return moment(String(val)).format("MM/DD/YYYY hh:mm");
+    setExpirationDate() {
+      const now = Date.now();
+      const expiration = Date.parse(this.fruit.expires);
+      if (expiration - now < 0) {
+        this.expired = true;
+      }
+      this.expires = moment(String(this.fruit.expires)).format(
+        "MM/DD/YYYY hh:mm"
+      );
     },
   },
 };
