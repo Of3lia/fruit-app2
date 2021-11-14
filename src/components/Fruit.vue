@@ -16,8 +16,9 @@
           fruit.name.charAt(0).toUpperCase() + fruit.name.slice(1)
         }}</v-card-title>
         <v-spacer></v-spacer>
-        <div>$ 550</div>
+        <div>{{ fruit.price }} €</div>
       </v-card-actions>
+      <div>{{ fruit.expires }}</div>
 
       <v-card-actions>
         <v-btn color="orange lighten-2" text> Eat </v-btn>
@@ -41,7 +42,7 @@
         </div>
       </v-expand-transition>
     </v-card>
-    <EditFruit v-else :fruit-to-edit="fruit" />
+    <EditFruit v-else :edit-fruit.sync="editFruit" :fruit-to-edit="fruit" />
   </div>
 </template>
 

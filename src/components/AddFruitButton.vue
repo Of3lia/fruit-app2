@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="!createFruit" id="isAdd" @click="createFruit = true">
+    <v-card v-if="!editFruit" id="isAdd" @click="editFruit = true">
       <v-icon
         id="add-button"
         style="
@@ -14,7 +14,7 @@
         >mdi-plus-thick</v-icon
       >
     </v-card>
-    <EditFruit v-else />
+    <EditFruit v-else :edit-fruit.sync="editFruit" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   components: { EditFruit },
   data() {
     return {
-      createFruit: false,
+      editFruit: false,
     };
   },
 };
