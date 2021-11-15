@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-form>
+      <v-form v-model="valid">
         <v-container>
           <v-row>
             <!-- Name -->
@@ -9,6 +9,7 @@
               <v-text-field
                 v-model="fruit.name"
                 label="Fruit name"
+                :rules="rules.name"
                 required
               ></v-text-field>
             </v-col>
@@ -114,12 +115,20 @@ export default {
     return {
       isCreate: true,
       fruitClone: {},
+      valid: false,
+      rules: {
+        name: [
+          (v) => !!v || "Name is required",
+          (v) => v.length <= 30 || "Name must be less than 30 characters",
+        ],
+      },
     };
   },
   mounted() {
     if (this.fruit) {
       this.fruitClone = Object.assign({}, this.fruit);
       this.isCreate = false;
+      console.log(this.rules.name);
     }
   },
   methods: {
@@ -154,4 +163,3 @@ export default {
   },
 };
 </script>
-
