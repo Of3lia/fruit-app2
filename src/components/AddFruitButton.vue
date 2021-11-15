@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-card v-if="!createFruit" id="isAdd" @click="createFruit = true">
+    <v-card
+      v-if="!createFruit"
+      id="isAdd"
+      @click="createFruit = true"
+      elevation="5"
+    >
       <v-icon
         id="add-button"
         style="

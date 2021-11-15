@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="!fruit.props.isEdit" :loading="loading">
+    <v-card v-if="!fruit.props.isEdit" :loading="loading" elevation="5">
       <template slot="progress">
         <v-progress-linear
           :color="fruit.color"
@@ -9,7 +9,15 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="fruit.image || noImage">
+      <v-img
+        style="cursor: pointer"
+        @click="$router.push('/fruit/' + fruit.id)"
+        :height="imgHeight"
+        :src="
+          fruit.image ||
+          'https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg'
+        "
+      >
         <div
           v-if="expired"
           style="
@@ -26,7 +34,7 @@
           Expired
         </div>
         <div
-          v-else
+          v-else-if="fruit.taste"
           style="
             padding: 0.3em;
             border-radius: 0.2em;
@@ -51,7 +59,7 @@
       <v-card-actions v-if="!expired">
         <v-btn
           text
-          elevation="3"
+          elevation="2"
           color="green lighten-2"
           @click="$store.dispatch('deleteFruit', fruit.id)"
         >
@@ -59,7 +67,7 @@
         </v-btn>
         <v-btn
           text
-          elevation="3"
+          elevation="2"
           color="orange lighten-2"
           @click="fruit.props.isEdit = true"
         >
@@ -76,14 +84,14 @@
       <v-card-actions v-else>
         <v-btn
           text
-          elevation="3"
+          elevation="2"
           color="red lighten-2"
           @click="$store.dispatch('deleteFruit', fruit.id)"
           >Discard</v-btn
         >
         <v-btn
           text
-          elevation="3"
+          elevation="2"
           color="orange lighten-2"
           @click="fruit.props.isEdit = true"
         >
@@ -122,7 +130,28 @@ import moment from "moment";
 export default {
   name: "Fruit",
   props: {
-    fruit: Object,
+    fruit: {
+      default() {
+        return {
+          id: "",
+          isFruit: true,
+          name: "",
+          price: "",
+          taste: "",
+          color: "",
+          description: "",
+          expires: "",
+          image: "",
+          props: {
+            empty: true,
+            isLoading: false,
+            isDeleted: false,
+            isEdit: false,
+          },
+        };
+      },
+      type: Object,
+    },
   },
   components: {
     EditFruit,
@@ -132,10 +161,29 @@ export default {
     show: false,
     expired: false,
     expires: "",
-    noImage: "https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg",
+    routeId: null,
+    imgHeight: "250",
   }),
   mounted() {
     this.setExpirationDate();
+    if (this.fruit.props.empty) {
+      this.imgHeight = "70vh";
+      this.routeId = this.$route.params.id;
+      this.$store
+        .dispatch("loadFruit", this.routeId)
+        .then(
+          (fruit) => (
+            (this.fruit.id = fruit.id),
+            (this.fruit.name = fruit.name),
+            (this.fruit.price = fruit.price),
+            (this.fruit.color = fruit.color),
+            (this.fruit.description = fruit.description),
+            (this.fruit.expires = fruit.expires),
+            (this.fruit.taste = fruit.taste),
+            (this.fruit.image = fruit.image)
+          )
+        );
+    }
   },
   methods: {
     reserve() {
