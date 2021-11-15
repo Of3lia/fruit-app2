@@ -88,8 +88,12 @@
         </v-container>
       </v-form>
       <v-card-actions>
-        <v-btn color="orange lighten-2" text @click="save()"> Save </v-btn>
-        <v-btn color="orange lighten-2" text @click="cancel()"> Cancel </v-btn>
+        <v-btn elevation="3" text color="green lighten-2" @click="save()">
+          Save
+        </v-btn>
+        <v-btn elevation="3" text color="orange lighten-2" @click="cancel()">
+          Cancel
+        </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>

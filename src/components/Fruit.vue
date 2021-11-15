@@ -17,7 +17,8 @@
             text-align: center;
             padding: 0.3em;
             border-radius: 0.2em;
-            background-color: rgb(100, 100, 100, 0.3);
+            background-color: rgb(200, 200, 200, 0.3);
+
             font-size: x-large;
             color: red;
           "
@@ -49,13 +50,19 @@
 
       <v-card-actions v-if="!expired">
         <v-btn
-          color="orange lighten-2"
           text
+          elevation="3"
+          color="green lighten-2"
           @click="$store.dispatch('deleteFruit', fruit.id)"
         >
           Eat
         </v-btn>
-        <v-btn color="orange lighten-2" text @click="fruit.props.isEdit = true">
+        <v-btn
+          text
+          elevation="3"
+          color="orange lighten-2"
+          @click="fruit.props.isEdit = true"
+        >
           Modify
         </v-btn>
         <v-spacer></v-spacer>
@@ -68,13 +75,18 @@
 
       <v-card-actions v-else>
         <v-btn
-          color="orange lighten-2"
           text
+          elevation="3"
+          color="red lighten-2"
           @click="$store.dispatch('deleteFruit', fruit.id)"
-          style="color: red"
           >Discard</v-btn
         >
-        <v-btn color="orange lighten-2" text @click="fruit.props.isEdit = true">
+        <v-btn
+          text
+          elevation="3"
+          color="orange lighten-2"
+          @click="fruit.props.isEdit = true"
+        >
           Modify
         </v-btn>
         <v-spacer></v-spacer>
