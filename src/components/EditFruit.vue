@@ -22,6 +22,7 @@
                 placeholder="0.00"
                 append-icon="mdi-currency-eur"
                 type="number"
+                :rules="rules.required"
                 required
               ></v-text-field>
             </v-col>
@@ -33,7 +34,6 @@
                 rows="1"
                 auto-grow
                 v-model="fruit.description"
-                required
               ></v-textarea>
             </v-col>
 
@@ -47,7 +47,6 @@
               <v-text-field
                 v-model="fruit.image"
                 label="Image URL"
-                required
               ></v-text-field>
             </v-col>
 
@@ -99,14 +98,23 @@
 
 <script>
 import moment from "moment";
-import { mapState } from "vuex";
 
 export default {
   name: "EditFruit",
   props: {
     fruit: {
       default() {
-        return { props: { isLoading: false, isDeleted: false, isEdit: false } };
+        return {
+          isFruit: true,
+          name: "",
+          price: "",
+          taste: "",
+          color: "",
+          description: "",
+          expires: "",
+          image: "",
+          props: { isLoading: false, isDeleted: false, isEdit: false },
+        };
       },
       type: Object,
     },
@@ -121,6 +129,7 @@ export default {
           (v) => !!v || "Name is required",
           (v) => v.length <= 30 || "Name must be less than 30 characters",
         ],
+        required: [(v) => !!v || "Price is required"],
       },
     };
   },
@@ -128,19 +137,18 @@ export default {
     if (this.fruit) {
       this.fruitClone = Object.assign({}, this.fruit);
       this.isCreate = false;
-      console.log(this.rules.name);
     }
   },
   methods: {
     save() {
-      if (this.fruit.props.isEdit) {
-        this.$store.dispatch("editFruit", this.fruit);
-        this.fruit.props.isEdit = false;
-      } else {
-        this.$store.dispatch("createFruit", this.fruit);
-        this.$emit("update:createFruit", false);
-        // this.isCreate = false;
-        // delete this.fruit;
+      if (this.valid) {
+        if (this.fruit.props.isEdit) {
+          this.$store.dispatch("editFruit", this.fruit);
+          this.fruit.props.isEdit = false;
+        } else {
+          this.$store.dispatch("createFruit", this.fruit);
+          this.$emit("update:createFruit", false);
+        }
       }
     },
     cancel() {

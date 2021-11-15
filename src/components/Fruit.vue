@@ -9,11 +9,13 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="fruit.image">
+      <v-img height="250" :src="fruit.image || noImage">
         <div
           v-if="expired"
           style="
-            padding: 0.2em;
+            top: 50%;
+            text-align: center;
+            padding: 0.3em;
             border-radius: 0.2em;
             background-color: rgb(100, 100, 100, 0.3);
             font-size: x-large;
@@ -25,10 +27,11 @@
         <div
           v-else
           style="
-            padding: 0.2em;
+            padding: 0.3em;
             border-radius: 0.2em;
-            background-color: rgb(150, 150, 150, 0.3);
+            background-color: rgb(200, 200, 200, 0.3);
             font-size: x-large;
+            float: right;
           "
           :style="{ color: fruit.color }"
         >
@@ -117,6 +120,7 @@ export default {
     show: false,
     expired: false,
     expires: "",
+    noImage: "https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg",
   }),
   mounted() {
     this.setExpirationDate();

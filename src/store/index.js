@@ -19,7 +19,6 @@ export default new Vuex.Store({
                 .catch(e => { console.log(e) });
         },
         createFruit({ commit }, fruit) {
-            fruit.isFruit = true;
             axios
                 .post('http://localhost:3000/fruit', {...fruit })
                 .then(r => {
