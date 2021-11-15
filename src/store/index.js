@@ -28,8 +28,9 @@ export default new Vuex.Store({
                 .catch(e => { console.log(e) });
         },
         editFruit({ commit }, fruit) {
+            let fruitClone = getFruitCloneWithoutProps(fruit);
             axios
-                .put('http://localhost:3000/fruit/' + fruit.id, {...fruit })
+                .put('http://localhost:3000/fruit/' + fruitClone.id, {...fruitClone })
                 .then(r => {
                     commit('EDIT_DATA', r.data)
                 })
@@ -50,6 +51,7 @@ export default new Vuex.Store({
             getFruitsFromChaos(fruits.data, state);
         },
         ADD_FRUIT(state, newFruit) {
+            addFruitProps(newFruit);
             state.fruits.push(newFruit);
         },
         EDIT_DATA(state, fruit) {
@@ -66,7 +68,8 @@ export default new Vuex.Store({
         },
         REMOVE_FRUIT(state, id) {
             let currentFruit = state.fruits.find(x => x.id === id);
-            currentFruit.id = '';
+            // currentFruit.id = '';
+            currentFruit.props.isDeleted = true;
         }
     },
     modules: {}
@@ -77,6 +80,7 @@ export default new Vuex.Store({
 var getFruitsFromChaos = async(data, state) => {
 
     let fruits = traverse(data);
+    fruits.map(f => addFruitProps(f));
     fruits.forEach(fruit => {
         state.fruits.push(fruit);
     });
@@ -97,4 +101,14 @@ function traverse(jsonObj) {
         });
     }
     return fruits;
+}
+
+function addFruitProps(fruit) {
+    fruit.props = { isLoading: false, isDeleted: false, isEdit: false };
+}
+
+function getFruitCloneWithoutProps(fruit) {
+    let clone = {...fruit }
+    delete clone.props;
+    return clone;
 }

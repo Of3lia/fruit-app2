@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="!editFruit" :loading="loading">
+    <v-card v-if="!fruit.props.isEdit" :loading="loading">
       <template slot="progress">
         <v-progress-linear
           :color="fruit.color"
@@ -52,7 +52,7 @@
         >
           Eat
         </v-btn>
-        <v-btn color="orange lighten-2" text @click="editFruit = true">
+        <v-btn color="orange lighten-2" text @click="fruit.props.isEdit = true">
           Modify
         </v-btn>
         <v-spacer></v-spacer>
@@ -71,7 +71,7 @@
           style="color: red"
           >Discard</v-btn
         >
-        <v-btn color="orange lighten-2" text @click="editFruit = true">
+        <v-btn color="orange lighten-2" text @click="fruit.props.isEdit = true">
           Modify
         </v-btn>
         <v-spacer></v-spacer>
@@ -96,11 +96,7 @@
         </div>
       </v-expand-transition>
     </v-card>
-    <EditFruit
-      v-else
-      :edit-fruit.sync="editFruit"
-      :fruit-to-edit.sync="fruitComp"
-    />
+    <EditFruit v-else :fruit="fruit" />
   </div>
 </template>
 
@@ -119,22 +115,11 @@ export default {
   data: () => ({
     loading: false,
     show: false,
-    editFruit: false,
     expired: false,
     expires: "",
   }),
   mounted() {
     this.setExpirationDate();
-  },
-  computed: {
-    fruitComp: {
-      get() {
-        return this.fruit;
-      },
-      set(val) {
-        this.fruit = val;
-      },
-    },
   },
   methods: {
     reserve() {

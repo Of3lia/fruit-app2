@@ -103,39 +103,43 @@ import { mapState } from "vuex";
 export default {
   name: "EditFruit",
   props: {
-    fruitToEdit: Object,
-    editFruit: Boolean,
+    fruit: {
+      default() {
+        return { props: { isLoading: false, isDeleted: false, isEdit: false } };
+      },
+      type: Object,
+    },
   },
   data() {
     return {
-      isEdit: false,
-      fruit: [],
-      fruitBeforeEdit: {},
+      isCreate: true,
+      fruitClone: {},
     };
   },
   mounted() {
-    if (this.fruitToEdit) {
-      this.isEdit = true;
-      this.fruit = this.fruitToEdit;
-      this.fruitBeforeEdit = Object.assign({}, this.fruitToEdit);
+    if (this.fruit) {
+      this.fruitClone = Object.assign({}, this.fruit);
+      this.isCreate = false;
     }
   },
   methods: {
     save() {
-      if (this.isEdit) {
+      if (this.fruit.props.isEdit) {
         this.$store.dispatch("editFruit", this.fruit);
+        this.fruit.props.isEdit = false;
       } else {
         this.$store.dispatch("createFruit", this.fruit);
+        this.$emit("update:createFruit", false);
+        // this.isCreate = false;
+        // delete this.fruit;
       }
     },
     cancel() {
-      if (this.isEdit) {
-        Object.assign(
-          this.$store.state.fruits.find((x) => x.id === this.fruit.id),
-          this.fruitBeforeEdit
-        );
+      if (!this.isCreate) {
+        this.$emit("update:createFruit", false);
+        Object.assign(this.fruit, this.fruitClone);
       }
-      this.$emit("update:editFruit", false);
+      this.fruit.props.isEdit = false;
     },
   },
   computed: {
