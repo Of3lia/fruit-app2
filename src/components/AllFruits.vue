@@ -3,15 +3,7 @@
     <v-container>
       <v-row>
         <template v-for="(fruit, i) in fruits">
-          <v-col
-            v-if="!fruit.props.isDeleted"
-            xs="12"
-            sm="6"
-            md="6"
-            lg="4"
-            xl="3"
-            :key="i"
-          >
+          <v-col xs="12" sm="6" md="6" lg="4" xl="3" :key="i">
             <Fruit :fruit="fruit" />
           </v-col>
         </template>

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-card v-if="!fruit.props.isEdit" :loading="loading" elevation="5">
+    <v-card
+      v-if="!fruit.props.isEdit"
+      :loading="fruit.props.isLoading"
+      elevation="5"
+    >
       <template slot="progress">
         <v-progress-linear
           :color="fruit.color"
@@ -26,7 +30,6 @@
             padding: 0.3em;
             border-radius: 0.2em;
             background-color: rgb(200, 200, 200, 0.3);
-
             font-size: x-large;
             color: red;
           "
@@ -61,7 +64,7 @@
           text
           elevation="2"
           color="green lighten-2"
-          @click="$store.dispatch('deleteFruit', fruit.id)"
+          @click="deleteFruit()"
         >
           Eat
         </v-btn>
@@ -82,11 +85,7 @@
       </v-card-actions>
 
       <v-card-actions v-else>
-        <v-btn
-          text
-          elevation="2"
-          color="red lighten-2"
-          @click="$store.dispatch('deleteFruit', fruit.id)"
+        <v-btn text elevation="2" color="red lighten-2" @click="deleteFruit()"
           >Discard</v-btn
         >
         <v-btn
@@ -146,7 +145,6 @@ export default {
           props: {
             empty: true,
             isLoading: false,
-            isDeleted: false,
             isEdit: false,
           },
         };
@@ -158,7 +156,6 @@ export default {
     EditFruit,
   },
   data: () => ({
-    loading: false,
     show: false,
     expired: false,
     expires: "",
@@ -174,9 +171,13 @@ export default {
     }
   },
   methods: {
-    reserve() {
-      this.loading = true;
-      setTimeout(() => (this.loading = false), 2000);
+    // reserve() {
+    //   this.loading = true;
+    //   setTimeout(() => (this.loading = false), 2000);
+    // },
+    deleteFruit() {
+      this.fruit.props.isLoading = true;
+      this.$store.dispatch("deleteFruit", this.fruit.id);
     },
     setExpirationDate() {
       const now = Date.now();

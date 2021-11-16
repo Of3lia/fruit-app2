@@ -19,7 +19,7 @@
         >mdi-plus-thick</v-icon
       >
     </v-card>
-    <EditFruit v-else :createFruit.sync="createFruit" />
+    <EditFruit v-else />
   </div>
 </template>
 
@@ -28,10 +28,15 @@ import EditFruit from "./EditFruit.vue";
 export default {
   name: "AddFruitButton",
   components: { EditFruit },
-  data() {
-    return {
-      createFruit: false,
-    };
+  computed: {
+    createFruit: {
+      get() {
+        return this.$store.state.createFruit;
+      },
+      set(val) {
+        this.$store.state.createFruit = val;
+      },
+    },
   },
 };
 </script>

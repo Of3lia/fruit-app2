@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        createFruit: false,
         fruits: [],
     },
     actions: {
@@ -16,7 +17,10 @@ export default new Vuex.Store({
                 .then(fruits => {
                     commit('SET_FRUITS', fruits)
                 })
-                .catch(e => { console.log(e) });
+                .catch(e => {
+                    console.log(e);
+                    alert('Ups! There was an error, try again later');
+                });
         },
         createFruit({ commit }, fruit) {
             axios
@@ -24,16 +28,22 @@ export default new Vuex.Store({
                 .then(r => {
                     commit('ADD_FRUIT', r.data)
                 })
-                .catch(e => { console.log(e) });
+                .catch(e => {
+                    console.log(e);
+                    alert('Ups! There was an error, try again later');
+                });
         },
         editFruit({ commit }, fruit) {
             let fruitClone = getFruitCloneWithoutProps(fruit);
             axios
                 .put('http://localhost:3000/fruit/' + fruitClone.id, {...fruitClone })
                 .then(r => {
-                    commit('EDIT_DATA', r.data)
+                    commit('EDIT_DATA', r.data.id)
                 })
-                .catch(e => { console.log(e) });
+                .catch(e => {
+                    console.log(e);
+                    alert('Ups! There was an error, try again later');
+                });
         },
         deleteFruit({ commit }, id) {
             axios
@@ -41,7 +51,10 @@ export default new Vuex.Store({
                 .then(r => {
                     commit('REMOVE_FRUIT', id)
                 })
-                .catch(e => { console.log(e) });
+                .catch(e => {
+                    console.log(e);
+                    alert('Ups! There was an error, try again later');
+                });
         }
     },
     mutations: {
@@ -50,25 +63,24 @@ export default new Vuex.Store({
             getFruitsFromChaos(fruits.data, state);
         },
         ADD_FRUIT(state, newFruit) {
-            addFruitProps(newFruit);
-            state.fruits.push(newFruit);
+            setTimeout(() => {
+                addFruitProps(newFruit);
+                state.fruits.push(newFruit);
+                this.state.createFruit = false;
+            }, 1000);
         },
-        EDIT_DATA(state, fruit) {
-            // Object.assign(state.fruits.find(x => x.id === fruit.id), {...fruit });
-            state.fruits.find(x => x.id == fruit.id).name = fruit.name;
-            // oldFruit.name = fruit.name;
-            // oldFruit.price = fruit.price;
-            // oldFruit.description = fruit.description;
-            // oldFruit.color = fruit.color;
-            // oldFruit.expires = fruit.expires;
-            // oldFruit.image = fruit.image;
-            // oldFruit.taste = fruit.taste;
-            // console.log(oldFruit);
+        EDIT_DATA(state, id) {
+            let current = state.fruits.find(x => x.id == id);
+            setTimeout(() => {
+                current.props.isLoading = false;
+                current.props.isEdit = false;
+            }, 1000);
         },
         REMOVE_FRUIT(state, id) {
-            let currentFruit = state.fruits.find(x => x.id === id);
+            setTimeout(() => {
+                state.fruits.splice(state.fruits.findIndex(x => x.id === id), 1);
+            }, 1000);
             // currentFruit.id = '';
-            currentFruit.props.isDeleted = true;
         }
     },
     modules: {}
@@ -103,7 +115,7 @@ function traverse(jsonObj) {
 }
 
 function addFruitProps(fruit) {
-    fruit.props = { isLoading: false, isDeleted: false, isEdit: false };
+    fruit.props = { isLoading: false, isEdit: false };
 }
 
 function getFruitCloneWithoutProps(fruit) {
