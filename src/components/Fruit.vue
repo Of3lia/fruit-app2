@@ -11,7 +11,7 @@
 
       <v-img
         style="cursor: pointer"
-        @click="$router.push('/fruit/' + fruit.id)"
+        @click="redirect()"
         :height="imgHeight"
         :src="
           fruit.image ||
@@ -126,6 +126,7 @@
 <script>
 import EditFruit from "./EditFruit.vue";
 import moment from "moment";
+import axios from "axios";
 
 export default {
   name: "Fruit",
@@ -169,20 +170,7 @@ export default {
     if (this.fruit.props.empty) {
       this.imgHeight = "70vh";
       this.routeId = this.$route.params.id;
-      this.$store
-        .dispatch("loadFruit", this.routeId)
-        .then(
-          (fruit) => (
-            (this.fruit.id = fruit.id),
-            (this.fruit.name = fruit.name),
-            (this.fruit.price = fruit.price),
-            (this.fruit.color = fruit.color),
-            (this.fruit.description = fruit.description),
-            (this.fruit.expires = fruit.expires),
-            (this.fruit.taste = fruit.taste),
-            (this.fruit.image = fruit.image)
-          )
-        );
+      this.getFruit(this.routeId);
     }
   },
   methods: {
@@ -199,6 +187,31 @@ export default {
       this.expires = moment(String(this.fruit.expires)).format(
         "MM/DD/YYYY hh:mm"
       );
+    },
+    getFruit(id) {
+      return axios
+        .get("http://localhost:3000/fruit/" + id)
+        .then((r) => r.data)
+        .then(
+          (fruit) => (
+            (this.fruit.id = fruit.id),
+            (this.fruit.name = fruit.name),
+            (this.fruit.price = fruit.price),
+            (this.fruit.color = fruit.color),
+            (this.fruit.description = fruit.description),
+            (this.fruit.expires = fruit.expires),
+            (this.fruit.taste = fruit.taste),
+            (this.fruit.image = fruit.image)
+          )
+        )
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    redirect() {
+      if (!this.routeId) {
+        this.$router.push("/fruit/" + this.fruit.id);
+      }
     },
   },
 };

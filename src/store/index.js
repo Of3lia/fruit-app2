@@ -9,12 +9,6 @@ export default new Vuex.Store({
         fruits: [],
     },
     actions: {
-        loadFruit({ commit }, id) {
-            return axios
-                .get('http://localhost:3000/fruit/' + id)
-                .then(r => r.data)
-                .catch(e => { console.log(e) });
-        },
         loadFruits({ commit }) {
             axios
                 .get('http://localhost:3000/fruit')

@@ -1,24 +1,13 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+    <v-app-bar app color="orange lighten-2" dark>
+      <div
+        @click="goHome()"
+        class="d-flex align-center"
+        style="cursor: pointer; font-size: x-large; user-select: none"
+      >
+        <v-icon x-large>mdi-fruit-pineapple</v-icon>
+        Fruits-App
       </div>
 
       <v-spacer></v-spacer>
@@ -28,8 +17,7 @@
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <!-- <span class="mr-2">Latest Release</span> -->
       </v-btn>
     </v-app-bar>
 
@@ -46,5 +34,12 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    goHome() {
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
+    },
+  },
 };
 </script>
