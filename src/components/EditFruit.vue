@@ -1,6 +1,14 @@
 <template>
   <div>
-    <v-card>
+    <v-card :loading="fruit.props.isLoading">
+      <template slot="progress">
+        <v-progress-linear
+          :color="fruit.color"
+          height="10"
+          indeterminate
+        ></v-progress-linear>
+      </template>
+
       <v-form v-model="valid">
         <v-container>
           <v-row>
@@ -113,11 +121,11 @@ export default {
           name: "",
           price: "",
           taste: "",
-          color: "",
+          color: "rgb(50,120,250)",
           description: "",
           expires: "",
           image: "",
-          props: { isLoading: false, isDeleted: false, isEdit: false },
+          props: { isLoading: false, isEdit: false },
         };
       },
       type: Object,
@@ -146,12 +154,12 @@ export default {
   methods: {
     save() {
       if (this.valid) {
+        this.fruit.props.isLoading = true;
         if (this.fruit.props.isEdit) {
           this.$store.dispatch("editFruit", this.fruit);
-          this.fruit.props.isEdit = false;
         } else {
           this.$store.dispatch("createFruit", this.fruit);
-          this.$emit("update:createFruit", false);
+          // this.$emit("update:createFruit", false);
         }
       }
     },
