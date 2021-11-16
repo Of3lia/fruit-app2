@@ -46,7 +46,7 @@ export default new Vuex.Store({
                 });
         },
         deleteFruit({ commit }, id) {
-            axios
+            return axios
                 .delete('http://localhost:3000/fruit/' + id)
                 .then(r => {
                     commit('REMOVE_FRUIT', id)
@@ -80,7 +80,6 @@ export default new Vuex.Store({
             setTimeout(() => {
                 state.fruits.splice(state.fruits.findIndex(x => x.id === id), 1);
             }, 1000);
-            // currentFruit.id = '';
         }
     },
     modules: {}

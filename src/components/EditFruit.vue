@@ -96,7 +96,13 @@
         </v-container>
       </v-form>
       <v-card-actions>
-        <v-btn elevation="3" text color="green lighten-2" @click="save()">
+        <v-btn
+          elevation="3"
+          :loading="fruit.props.isLoading"
+          text
+          color="green lighten-2"
+          @click="save()"
+        >
           Save
         </v-btn>
         <v-btn elevation="3" text color="orange lighten-2" @click="cancel()">

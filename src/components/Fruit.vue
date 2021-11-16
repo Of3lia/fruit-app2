@@ -34,34 +34,30 @@
             color: red;
           "
         >
-          Expired
-        </div>
-        <div
-          v-else-if="fruit.taste"
-          style="
-            padding: 0.3em;
-            border-radius: 0.2em;
-            background-color: rgb(200, 200, 200, 0.3);
-            font-size: x-large;
-            float: right;
-          "
-          :style="{ color: fruit.color }"
-        >
-          {{ fruit.taste }}
+          Expired {{ expires }}
         </div>
       </v-img>
+      <v-row>
+        <v-col>
+          <v-card-title>
+            {{ fruit.name.charAt(0).toUpperCase() + fruit.name.slice(1) }}
+          </v-card-title>
 
-      <v-card-actions>
-        <v-card-title>{{
-          fruit.name.charAt(0).toUpperCase() + fruit.name.slice(1)
-        }}</v-card-title>
-        <v-spacer></v-spacer>
-        <div>{{ fruit.price }} €</div>
-      </v-card-actions>
+          <v-card-subtitle :style="{ color: fruit.color }">
+            <i> "{{ fruit.taste }}" </i>
+          </v-card-subtitle>
+        </v-col>
+        <v-col>
+          <v-card-text style="display: inline-block">
+            <div style="text-align: right">{{ fruit.price }} €</div>
+          </v-card-text>
+        </v-col>
+      </v-row>
 
       <v-card-actions v-if="!expired">
         <v-btn
           text
+          :loading="fruit.props.isLoading"
           elevation="2"
           color="green lighten-2"
           @click="deleteFruit()"
@@ -85,7 +81,12 @@
       </v-card-actions>
 
       <v-card-actions v-else>
-        <v-btn text elevation="2" color="red lighten-2" @click="deleteFruit()"
+        <v-btn
+          :loading="fruit.props.isLoading"
+          text
+          elevation="2"
+          color="red lighten-2"
+          @click="deleteFruit()"
           >Discard</v-btn
         >
         <v-btn
@@ -177,7 +178,13 @@ export default {
     // },
     deleteFruit() {
       this.fruit.props.isLoading = true;
-      this.$store.dispatch("deleteFruit", this.fruit.id);
+      this.$store.dispatch("deleteFruit", this.fruit.id).then(() => {
+        setTimeout(() => {
+          if (this.$route.path !== "/") {
+            this.$router.push("/");
+          }
+        }, 1000);
+      });
     },
     setExpirationDate() {
       const now = Date.now();
