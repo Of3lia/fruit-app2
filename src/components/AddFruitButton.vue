@@ -25,6 +25,7 @@
 
 <script>
 import EditFruit from "./EditFruit.vue";
+
 export default {
   name: "AddFruitButton",
   components: { EditFruit },
@@ -34,7 +35,7 @@ export default {
         return this.$store.state.createFruit;
       },
       set(val) {
-        this.$store.state.createFruit = val;
+        this.$store.commit("SET_CREATE_FRUIT", val);
       },
     },
   },

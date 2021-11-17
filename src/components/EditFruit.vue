@@ -175,6 +175,7 @@ export default {
         Object.assign(this.fruit, this.fruitClone);
       }
       this.fruit.props.isEdit = false;
+      this.$store.commit("SET_CREATE_FRUIT", false);
     },
   },
   computed: {
