@@ -172,10 +172,6 @@ export default {
     }
   },
   methods: {
-    // reserve() {
-    //   this.loading = true;
-    //   setTimeout(() => (this.loading = false), 2000);
-    // },
     deleteFruit() {
       this.fruit.props.isLoading = true;
       this.$store.dispatch("deleteFruit", this.fruit.id).then(() => {
