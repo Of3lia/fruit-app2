@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "serve-api": "cd node_modules/fruit-api/api && node index.js",
-    "serve-app": "vue-cli-service serve"
+    "serve-app": "vue-cli-service serve",
+    "publish-github": "npm run build && rm -rf docs; cp -r dist docs && sed -i -e 's/src=\\//src=/g' docs/index.html ; sed -i -e 's/href=\\//href=/g' docs/index.html"
   },
   "dependencies": {
     "axios-vue": "^0.1.3",
