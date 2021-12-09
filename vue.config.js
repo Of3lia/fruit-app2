@@ -2,5 +2,5 @@ module.exports = {
   transpileDependencies: [
     'vuetify'
   ],
-  publicPath: "https://of3lia.github.io/fruit-app2/"
+  publicPath: process.env.NODE_ENV === "production" ? "/fruit-app2/" : "/",
 }
