@@ -2,5 +2,5 @@ module.exports = {
   transpileDependencies: [
     'vuetify'
   ],
-  publicPath: "//"
+  publicPath: "/fruit-app2/"
 }
