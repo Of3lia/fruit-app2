@@ -1,0 +1,122 @@
+[
+    {
+        "isFruit": true,
+        "name": "pineapple",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/pineapple.jpg",
+        "price": "744.00",
+        "color": "#5b0e2a",
+        "description": "The pineapple (Ananas comosus) is a tropical plant with an edible fruit and the most economically significant plant in the family Bromeliaceae.",
+        "taste": "Practical",
+        "expires": "2022-08-19T04:19:20.504Z",
+        "id": 1,
+        "does": {
+            "it": {
+                "ever": {
+                    "end": {
+                        "name": "Oliver",
+                        "username": "Oliver2",
+                        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/alexandermayes/128.jpg",
+                        "email": "Oliver255@gmail.com",
+                        "dob": "1968-05-17T22:52:56.962Z",
+                        "phone": "1-563-045-6308",
+                        "address": {
+                            "street": "Tessie Motorway",
+                            "suite": "Suite 038",
+                            "city": "Weberfurt",
+                            "zipcode": "85040-7310",
+                            "geo": {
+                                "lat": "40.8418",
+                                "lng": "-139.8367"
+                            }
+                        },
+                        "website": "marco.biz",
+                        "company": {
+                            "name": "Dooley - McClure",
+                            "catchPhrase": "Secured encompassing project",
+                            "bs": "world-class streamline supply-chains"
+                        }
+                    }
+                }
+            }
+        },
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    },
+    {
+        "isFruit": true,
+        "name": "orange",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/orange.jpg",
+        "price": "489.00",
+        "color": "#1e6f6d",
+        "description": "The orange is the fruit of various citrus species in the family Rutaceae (see list of plants known as orange); it primarily refers to Citrus × sinensis, which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange. The sweet orange reproduces asexually (apomixis through nucellar embryony); varieties of sweet orange arise through mutations.",
+        "taste": "Gorgeous",
+        "expires": "2021-11-26T15:56:30.185Z",
+        "id": 2,
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    },
+    {
+        "isFruit": true,
+        "name": "banana",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/banana.jpg",
+        "price": "543.00",
+        "color": "#726336",
+        "description": "A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.",
+        "taste": "Generic",
+        "expires": "2022-02-17T17:51:10.872Z",
+        "id": 3,
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    },
+    {
+        "isFruit": true,
+        "name": "tomato",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/tomato.jpg",
+        "price": "838.00",
+        "color": "#204856",
+        "description": "The tomato is the edible, often red, berry of the plant Solanum lycopersicum, commonly known as a tomato plant. The species originated in western South America and Central America.",
+        "taste": "Small",
+        "expires": "2022-12-02T11:35:17.135Z",
+        "id": 4,
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    },
+    {
+        "isFruit": true,
+        "name": "apple",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/apple.jpg",
+        "price": "312.00",
+        "color": "#6e551e",
+        "description": "An apple is an edible fruit produced by an apple tree.",
+        "taste": "Practical",
+        "expires": "2021-02-24T08:55:08.177Z",
+        "id": 5,
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    },
+    {
+        "isFruit": true,
+        "name": "kiwi",
+        "image": "https://raw.githubusercontent.com/cycloidio/fictional-eureka/master/assets/kiwi.jpg",
+        "price": "421.00",
+        "color": "#0d3f49",
+        "description": "Kiwifruit (often shortened to kiwi outside Australia and New Zealand), or Chinese gooseberry, is the edible berry of several species of woody vines in the genus Actinidia.",
+        "taste": "Tasty",
+        "expires": "2021-12-08T13:51:34.566Z",
+        "id": 6,
+        "props": {
+            "isLoading": false,
+            "isEdit": false
+        }
+    }
+]

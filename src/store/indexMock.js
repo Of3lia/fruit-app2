@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+const mockData = require('../assets/fruits.json');
 
 Vue.use(Vuex)
 
@@ -8,53 +9,30 @@ export default new Vuex.Store({
     state: {
         createFruit: false,
         fruits: [],
+
     },
     actions: {
         loadFruits({ commit }) {
-            axios
-                .get('http://localhost:3000/fruit')
-                .then(r => r.data)
-                .then(fruits => {
-                    commit('SET_FRUITS', fruits)
-                })
-                .catch(e => {
-                    console.log(e);
-                    alert('Ups! There was an error, try again later');
-                });
+            commit('SET_FRUITS', mockData);
         },
         createFruit({ commit }, fruit) {
-            axios
-                .post('http://localhost:3000/fruit', { ...fruit })
-                .then(r => {
-                    commit('ADD_FRUIT', r.data)
-                })
-                .catch(e => {
-                    console.log(e);
-                    alert('Ups! There was an error, try again later');
-                });
+            commit('ADD_FRUIT', fruit)
         },
         editFruit({ commit }, fruit) {
-            let fruitClone = getFruitCloneWithoutProps(fruit);
-            axios
-                .put('http://localhost:3000/fruit/' + fruitClone.id, { ...fruitClone })
-                .then(r => {
-                    commit('EDIT_DATA', r.data.id)
-                })
-                .catch(e => {
-                    console.log(e);
-                    alert('Ups! There was an error, try again later');
-                });
+            commit('EDIT_DATA', fruit)
         },
         deleteFruit({ commit }, id) {
-            return axios
-                .delete('http://localhost:3000/fruit/' + id)
-                .then(r => {
-                    commit('REMOVE_FRUIT', id)
-                })
-                .catch(e => {
-                    console.log(e);
-                    alert('Ups! There was an error, try again later');
-                });
+            commit('REMOVE_FRUIT', id)
+
+            // return axios
+            //     .delete('http://localhost:3000/fruit/' + id)
+            //     .then(r => {
+            //         commit('REMOVE_FRUIT', id)
+            //     })
+            //     .catch(e => {
+            //         console.log(e);
+            //         alert('Ups! There was an error, try again later');
+            //     });
         }
     },
     mutations: {
@@ -63,7 +41,7 @@ export default new Vuex.Store({
         },
         SET_FRUITS(state, fruits) {
             state.fruits = [];
-            getFruitsFromChaos(fruits.data, state);
+            state.fruits = fruits;
         },
         ADD_FRUIT(state, newFruit) {
             setTimeout(() => {
@@ -72,8 +50,9 @@ export default new Vuex.Store({
                 this.state.createFruit = false;
             }, 1000);
         },
-        EDIT_DATA(state, id) {
-            let current = state.fruits.find(x => x.id == id);
+        EDIT_DATA(state, newFruit) {
+            let current = state.fruits.find(x => x.id == newFruit.id);
+            current = newFruit;
             setTimeout(() => {
                 current.props.isLoading = false;
                 current.props.isEdit = false;
