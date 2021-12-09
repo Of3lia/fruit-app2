@@ -22,16 +22,6 @@ export default new Vuex.Store({
         },
         deleteFruit({ commit }, id) {
             commit('REMOVE_FRUIT', id)
-
-            // return axios
-            //     .delete('http://localhost:3000/fruit/' + id)
-            //     .then(r => {
-            //         commit('REMOVE_FRUIT', id)
-            //     })
-            //     .catch(e => {
-            //         console.log(e);
-            //         alert('Ups! There was an error, try again later');
-            //     });
         }
     },
     mutations: {
@@ -66,40 +56,6 @@ export default new Vuex.Store({
     modules: {}
 })
 
-// Utils TODO: move to utils file
-
-var getFruitsFromChaos = async (data, state) => {
-
-    let fruits = traverse(data);
-    fruits.map(f => addFruitProps(f));
-    fruits.forEach(fruit => {
-        state.fruits.push(fruit);
-    });
-
-    state.fruits.sort((a, b) => a.id - b.id);
-}
-
-function traverse(jsonObj) {
-    let fruits = [];
-    if (jsonObj !== null && typeof jsonObj == "object") {
-
-        Object.entries(jsonObj).forEach(([key, value]) => {
-
-            let returnFruits = traverse(value);
-            returnFruits.forEach(fruit => { fruits.push(fruit); });
-
-            if (key == 'isFruit' && value === true && jsonObj.id) { fruits.push(jsonObj); }
-        });
-    }
-    return fruits;
-}
-
 function addFruitProps(fruit) {
     fruit.props = { isLoading: false, isEdit: false };
-}
-
-function getFruitCloneWithoutProps(fruit) {
-    let clone = { ...fruit }
-    delete clone.props;
-    return clone;
 }
