@@ -193,24 +193,16 @@ export default {
       );
     },
     getFruit(id) {
-      return axios
-        .get("http://localhost:3000/fruit/" + id)
-        .then((r) => r.data)
-        .then(
-          (fruit) => (
-            (this.fruit.id = fruit.id),
-            (this.fruit.name = fruit.name),
-            (this.fruit.price = fruit.price),
-            (this.fruit.color = fruit.color),
-            (this.fruit.description = fruit.description),
-            (this.fruit.expires = fruit.expires),
-            (this.fruit.taste = fruit.taste),
-            (this.fruit.image = fruit.image)
-          )
-        )
-        .catch((e) => {
-          console.log(e);
-        });
+      let fruit = this.$store.state.fruits.find((x) => x.id == id);
+      console.log(fruit);
+      this.fruit.id = fruit.id;
+      this.fruit.name = fruit.name;
+      this.fruit.price = fruit.price;
+      this.fruit.color = fruit.color;
+      this.fruit.description = fruit.description;
+      this.fruit.expires = fruit.expires;
+      this.fruit.taste = fruit.taste;
+      this.fruit.image = fruit.image;
     },
     redirect() {
       if (!this.routeId) {
